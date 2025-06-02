@@ -1,16 +1,71 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./login.css";
 import Button from "react-bootstrap/Button";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import { UserContext } from "@/app/userContext";
 
 export default function page() {
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  const router = useRouter();
+
+  const [formData, setformData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const login = async () => {
+    try {
+      const loginUrl = `${baseUrl}/api/login`;
+      const res = await fetch(loginUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await res.json();
+      console.log("data is ,", data);
+      toast.success("Login Successful!");
+      localStorage.setItem("token", JSON.stringify(data.data));
+      setUserInfo(data.data);
+
+      router.push("/");
+    } catch (error) {
+      console.log("Error while login ::", error);
+      toast.error("Error While Login ");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setformData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login();
+  };
+
   return (
     <section className="auth_bg login ">
       <div className="container">
         <div className="row">
           <div className="col-lg-6 left_div p-3">
             <h1 className="login_heading ">Login</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="label_auth">
                   Email Address
@@ -22,6 +77,8 @@ export default function page() {
                   placeholder="Email"
                   id="email"
                   name="email"
+                  onChange={handleChange}
+                  value={formData.email}
                 />
                 <br />
               </div>
@@ -35,10 +92,15 @@ export default function page() {
                   type="password"
                   className="input_auth"
                   placeholder="Password"
+                  name="password"
+                  onChange={handleChange}
+                  value={formData.password}
                 />
                 <br />
               </div>
-              <button className="sign_in">Sign in</button>
+              <button className="sign_in" type="submit">
+                Sign in
+              </button>
               <div className="check_forget mt-2">
                 <div className="checkbox_field">
                   <input type="checkbox" id="remember" />
@@ -77,6 +139,7 @@ export default function page() {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </section>
   );

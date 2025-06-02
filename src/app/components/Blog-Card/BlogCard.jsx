@@ -1,19 +1,28 @@
 import React from "react";
 import "./blog_card.css";
 
-export default function BlogCard() {
+export default function BlogCard({ content }) {
+  const getWords = (str) => {
+    return (
+      str.split(" ").slice(0, 6).join(" ") +
+      (str.split(" ").length > 6 ? "" : "")
+    );
+  };
+  const getWordsTitle = (str) => {
+    const words = str.split(" ");
+    return words.slice(0, 20).join(" ") + (words.length > 20 ? "..." : "");
+  };
+
   return (
     <section className="blog_card">
       <div className="img_div">
         <img src="/assets/blog_img.jpg" alt="blog image" />
-        <div className="body">
-          <h3>How to design effective arts?</h3>
-          <p className="mb-3">
-            The recording starts with the patter of a summer squall. Later, a
-            drifting tone like that of a not-quite-tuned-in radio
-          </p>
-          <a href="#">Continue reading</a>
-        </div>
+      </div>
+
+      <div className="body">
+        <h3>{getWords(content.title)}</h3>
+        <p className="mb-3">{getWordsTitle(content.description)}</p>
+        <a href="#">Continue reading</a>
       </div>
     </section>
   );

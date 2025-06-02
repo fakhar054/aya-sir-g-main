@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./custom_navbar.css";
 import { CiGlobe } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
@@ -9,17 +9,35 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { FaBars } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { UserContext } from "@/app/userContext";
 
 export default function CustomNavbar() {
+  const router = useRouter();
   const [userDetails, showUserDetails] = useState(false);
   const [myNavbar, setMyNavbar] = useState(false);
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const pathname = usePathname();
+
+  // console.log("User Info ", userInfo);
+
+  const userToken = userInfo?.api_token;
 
   const handleUserDetails = () => {
     showUserDetails(!userDetails);
   };
   const handleNavbar = () => {
     setMyNavbar(!myNavbar);
+  };
+  const gotoLogin = () => {
+    router.push("/login");
+  };
+
+  const handleLogout = () => {
+    setUserInfo(null);
+    localStorage.removeItem("token");
+    showUserDetails(false);
+    router.push("/login");
   };
 
   return (
@@ -109,23 +127,30 @@ export default function CustomNavbar() {
                   onClick={handleUserDetails}
                 />
                 <div className="name_div" onClick={handleUserDetails}>
-                  <p>Name</p>
+                  {userToken ? (
+                    <p>{userInfo?.first_name}</p>
+                  ) : (
+                    <p onClick={gotoLogin}>Login</p>
+                  )}
                 </div>
                 <div className="bars" onClick={handleNavbar}>
                   <FaBars className="icon_bars" />
                 </div>
               </div>
-              <ul
-                className={`user_details ${
-                  userDetails ? "show_user_details" : ""
-                }`}
-              >
-                <li>Profile</li>
-                <li>Address</li>
-                <li>E-centers</li>
-                <li>Individuals</li>
-                <li>Companies</li>
-              </ul>
+              {userToken && (
+                <ul
+                  className={`user_details ${
+                    userDetails ? "show_user_details" : ""
+                  }`}
+                >
+                  <li>Profile</li>
+                  <li>Address</li>
+                  <li>E-centers</li>
+                  <li>Individuals</li>
+                  <li>Companies</li>
+                  <li onClick={handleLogout}>Logout</li>
+                </ul>
+              )}
             </div>
           </div>
         </nav>

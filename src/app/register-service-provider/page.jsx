@@ -1,12 +1,12 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import "./sign-up.css";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./register-provider.css";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
-export default function page() {
+export default function RegisterPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -14,66 +14,57 @@ export default function page() {
     contact_no: "",
     email: "",
     password: "",
-    city: "",
-    address: "",
+    user_type: "",
+    designation: "",
   });
 
-  const router = useRouter();
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const api = `${baseUrl}/api/register`;
 
+  const handleRegisterion = async () => {
+    const res = await fetch(api, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    if (!res.ok) {
+      throw new Error("Registration Failed");
+    }
+    const data = await res.json();
+    toast.success("Service Provider Registered Successfully");
+    localStorage.setItem("service_provider_token", data);
+    router.push("/");
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    const mappedValue =
+      name === "user_type"
+        ? value === "individual"
+          ? "provider"
+          : value === "company"
+          ? "handyman"
+          : ""
+        : value;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: mappedValue,
+    }));
   };
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-  const api = `${baseUrl}/api/register`;
-  const postData = async () => {
-    try {
-      const res = await fetch(api, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to register");
-      }
-      const data = await res.json();
-      console.log("Response after regestraion ", data);
-
-      toast("Registered Successfully");
-      setFormData({
-        first_name: "",
-        last_name: "",
-        username: "",
-        contact_no: "",
-        email: "",
-        password: "",
-        city: "",
-        address: "",
-      });
-      setTimeout(() => {
-        router.push("/login");
-      }, 1500);
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    postData();
-    console.log("form Data", formData);
-  };
-  const handleClick = () => {
-    router.push("/register-service-provider");
+    console.log("Form Submitted:", formData);
+    handleRegisterion(); // Call the API on submit
   };
 
   return (
-    <div className="sign_up auth_bg">
+    <div className="register_provider auth_bg">
       <div className="container p-2 bg_white">
         <h1 className="auth_heading margin_bottom">Sign Up</h1>
         <form onSubmit={handleSubmit}>
@@ -82,7 +73,6 @@ export default function page() {
               type="text"
               className="input_auth"
               placeholder="First Name"
-              id="first_name"
               name="first_name"
               onChange={handleChange}
               value={formData.first_name}
@@ -92,26 +82,25 @@ export default function page() {
               type="text"
               className="input_auth"
               placeholder="Last Name"
-              id="last_name"
               name="last_name"
               onChange={handleChange}
               value={formData.last_name}
               required
             />
           </div>
+
           <div className="input_one_row">
             <input
               type="text"
               className="input_auth"
               placeholder="User Name"
-              id="username"
               name="username"
               onChange={handleChange}
               value={formData.username}
               required
             />
             <input
-              type="text"
+              type="email"
               className="input_auth"
               placeholder="Email Address"
               name="email"
@@ -127,7 +116,6 @@ export default function page() {
               className="input_auth"
               placeholder="Create Password"
               name="password"
-              id="password"
               onChange={handleChange}
               value={formData.password}
               required
@@ -137,55 +125,57 @@ export default function page() {
               className="input_auth"
               placeholder="Phone Number"
               name="contact_no"
-              id="contact_no"
               onChange={handleChange}
               value={formData.contact_no}
               required
             />
           </div>
+
           <div className="input_one_row">
-            <input
-              type="text"
+            <select
               className="input_auth"
-              placeholder="City"
-              name="city"
+              name="user_type"
               onChange={handleChange}
-              value={formData.city}
+              value={
+                formData.user_type === "provider"
+                  ? "individual"
+                  : formData.user_type === "handyman"
+                  ? "company"
+                  : ""
+              }
               required
-            />
+            >
+              <option value="">Select User Type</option>
+              <option value="individual">Individual</option>
+              <option value="company">Company</option>
+            </select>
+
             <input
               type="text"
               className="input_auth"
-              placeholder="Address"
-              name="address"
+              placeholder="Designation"
+              name="designation"
               onChange={handleChange}
-              value={formData.address}
+              value={formData.designation}
               required
             />
           </div>
+
           <button className="sign_in" type="submit">
             Sign Up
           </button>
+
           <div className="checkbox_field mt-1">
             <input type="checkbox" id="remember" />
             <label htmlFor="remember" className="custom-checkbox">
               I agree with the
-              <span className="terms">Terms & Conditions </span>
+              <span className="terms"> Terms & Conditions </span>
               of Clarity
             </label>
           </div>
-          <p>or</p>
-          <p onClick={handleClick} className="register_comp">
-            Want to register as Individual or Company?
-          </p>
         </form>
-        <ToastContainer />
 
-        {/* <div className="logo_div mt-3">
-          <img src="/assets/logo_header.png" alt="" className="logo" />
-          <p id="head">AYA SIR G!</p>
-          <p id="descri">YOUR TRUSTED EVERYWHERE</p>
-        </div> */}
+        <ToastContainer />
       </div>
     </div>
   );

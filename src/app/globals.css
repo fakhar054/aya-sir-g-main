@@ -58,7 +58,7 @@ p {
 .auth_bg .input_auth {
   width: 100%;
   max-width: 472px;
-  height: 47px;
+  height: 44px;
   border-radius: 9px;
   background-color: white;
   border: 1px solid var(--lighter-gray);
@@ -115,7 +115,7 @@ button.sign_in {
   margin-top: 20px;
   width: 100%;
   max-width: 472px;
-  height: 47px;
+  height: 43px;
   border-radius: 9px;
   color: white;
   font-size: 16px;

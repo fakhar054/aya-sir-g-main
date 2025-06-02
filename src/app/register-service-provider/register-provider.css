@@ -1,22 +1,22 @@
-.sign_up {
+.register_provider {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: black !important;
 }
-.sign_up .input_auth {
+.register_provider .input_auth {
   width: 100%;
   margin-bottom: 14px;
 }
 .auth_heading {
   font-size: 32px;
 }
-/* .sign_up .bg_white {
-  height: fit-content;
-} */
+/* .register_provider .bg_white {
+    height: fit-content;
+  } */
 
-.sign_up form {
+.register_provider form {
   width: 100%;
   text-align: center;
   display: flex;
@@ -26,16 +26,16 @@
   margin: 0 auto;
   padding: 25px;
 }
-.sign_up .input_one_row {
+.register_provider .input_one_row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 30px;
 }
-.sign_up form div {
+.register_provider form div {
   width: 100%;
 }
-.sign_up .bg_white {
+.register_provider .bg_white {
   background-color: white;
   border-radius: 22px;
   z-index: 99;
@@ -45,41 +45,41 @@
   max-width: 942px;
   padding: 30px 0 !important;
 }
-.sign_up .input_auth {
+.register_provider .input_auth {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   margin-bottom: 11px;
 }
-.sign_up .checkbox_field {
+.register_provider .checkbox_field {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   color: black;
 }
-.sign_up .checkbox_field label {
+.register_provider .checkbox_field label {
   font-size: 14px;
 }
 span.terms {
   color: var(--red-color);
 }
-.sign_up .sign_in {
+.register_provider .sign_in {
   margin: 20px;
   padding: 1px 30px;
   width: auto;
 }
-.sign_up .margin_bottom {
+.register_provider .margin_bottom {
   margin-bottom: 0.5rem;
 }
-.sign_up p.register_comp {
+.register_provider p.register_comp {
   cursor: pointer;
   color: var(--red-color);
 }
 
 @media screen and (max-width: 992px) {
-  .sign_up form {
+  .register_provider form {
     width: 60%;
   }
-  .sign_up .margin_bottom {
+  .register_provider .margin_bottom {
     margin-bottom: 1rem !important;
   }
   .auth_heading {
@@ -88,7 +88,7 @@ span.terms {
   button.sign_in {
     height: 43px;
   }
-  .sign_up .input_auth {
+  .register_provider .input_auth {
     height: 43px;
   }
   .checkbox_field label {
@@ -97,10 +97,10 @@ span.terms {
 }
 
 @media screen and (max-width: 576px) {
-  .sign_up form {
+  .register_provider form {
     width: 100%;
   }
-  .sign_up .bg_white {
+  .register_provider .bg_white {
     width: 95%;
   }
 }

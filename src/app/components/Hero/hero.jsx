@@ -1,28 +1,115 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./hero.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import { IoSearch } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+import { IoLocationOutline } from "react-icons/io5";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export default function Hero() {
-  const [selectedServices, setSelectedServices] = useState("Services");
-  const [selectedcity, setSelectedCity] = useState("All Cities");
+  const router = useRouter();
 
-  const handleSelectedCities = (eventKey) => {
-    setSelectedCity(eventKey);
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
   };
+  const handleShow = () => setShow(true);
 
-  const secondDropdownRef = useRef(null);
-  const handleSelectedServices = (eventKey) => {
-    setSelectedServices(eventKey);
-    if (secondDropdownRef.current) {
-      secondDropdownRef.current.click();
+  const [apiCategory, setapiCategories] = useState([]);
+  const [apiServices, setapiServices] = useState([]);
+
+  const [selectedServices, setSelectedServices] = useState("Services");
+  const [selectedCategory, setSelectedCategory] = useState("Categories");
+  const [selectedCity, setSelectedCity] = useState("All Cities");
+
+  const [showServices, setShowServices] = useState(false);
+  const [showCities, setShowCities] = useState(false);
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const categoryApi = `${baseUrl}/api/category-list`;
+
+  const getCategories = async () => {
+    try {
+      const res = await fetch(categoryApi);
+      const data = await res.json();
+      setapiCategories(data.data);
+    } catch (error) {
+      console.log("Error while fetching categories");
     }
   };
 
+  const getServices = async (categoryId) => {
+    try {
+      const res = await fetch(
+        `https://staging.hylanmaterialsupply.com/api/service-list?category_id=${categoryId}`
+      );
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+      const data = await res.json();
+      setapiServices(data.data);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+
+  //code for location
+  const [location, setLocation] = useState({ lat: null, lon: null });
+  const [error, setError] = useState("");
+
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+          setError("");
+        },
+        (err) => {
+          setError("Permission denied or error getting location");
+          console.error(err);
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by this browser.");
+    }
+    setShow(false);
+  };
+
+  const handleSelectedCategory = async (eventKey, event) => {
+    const selectedCat = apiCategory.find(
+      (cat) => `${cat.name} ${cat.id}` === eventKey
+    );
+    setSelectedCategory(selectedCat?.name || "Categories");
+    setSelectedServices("Services");
+    setShowServices(true);
+    setShowCities(false);
+    if (selectedCat) {
+      await getServices(selectedCat.id);
+    }
+  };
+
+  const handleSelectedServices = (eventKey) => {
+    setSelectedServices(eventKey);
+    setShowServices(false);
+    setShowCities(true);
+  };
+
+  const handleSearch = () => {
+    router.push("/compnies");
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <section className="hero_section mb-5 d-flex flex-column justify-content-center align-items-center">
-      <div className="position-relative  text-center">
+      <div className="position-relative text-center">
         <h1 className="hero_heading" data-aos="fade-right">
           A Better Path to More
         </h1>
@@ -38,47 +125,92 @@ export default function Hero() {
           data-aos="fade-up"
         >
           <Dropdown
-            className="services_dropdown language"
+            className="services_dropdown category"
+            onSelect={handleSelectedCategory}
+          >
+            <Dropdown.Toggle
+              variant="success"
+              id="dropdown-category"
+              className={
+                selectedCategory !== "Categories" ? "selected_black" : ""
+              }
+            >
+              {selectedCategory}
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="list_menu">
+              {apiCategory.map((item) => (
+                <Dropdown.Item
+                  key={item.id}
+                  eventKey={`${item.name} ${item.id}`}
+                >
+                  {item.name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <Dropdown
+            className="services_dropdown services"
+            show={showServices}
+            onToggle={(isOpen) => setShowServices(isOpen)}
             onSelect={handleSelectedServices}
           >
             <Dropdown.Toggle
               variant="success"
-              id="dropdown-basic"
+              id="dropdown-services"
               className={
                 selectedServices !== "Services" ? "selected_black" : ""
               }
             >
               {selectedServices}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="Driver" className="drop_down_active">
-                Driver
-              </Dropdown.Item>
-              <Dropdown.Item eventKey="Plumber">Plumber</Dropdown.Item>
-              <Dropdown.Item eventKey="Electrician">Electrician</Dropdown.Item>
+            <Dropdown.Menu className="list_menu">
+              {apiServices.length > 0 ? (
+                apiServices.map((service, idx) => (
+                  <Dropdown.Item key={idx} eventKey={service.name}>
+                    {service.name}
+                  </Dropdown.Item>
+                ))
+              ) : (
+                <Dropdown.Item disabled>No services found</Dropdown.Item>
+              )}
             </Dropdown.Menu>
           </Dropdown>
 
-          <Dropdown
-            className="services_dropdown cities"
-            onSelect={handleSelectedCities}
+          <div className="icon_div " onClick={handleShow}>
+            <IoLocationOutline className="location_icon" />
+          </div>
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
           >
-            <Dropdown.Toggle
-              variant="success"
-              id="dropdown-city"
-              ref={secondDropdownRef}
-              className={selectedcity !== "All Cities" ? "selected_black" : ""}
-            >
-              {selectedcity}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="New York">New York</Dropdown.Item>
-              <Dropdown.Item eventKey="Lahore">Lahore</Dropdown.Item>
-              <Dropdown.Item eventKey="Karachi">Karachi</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+            <Modal.Header closeButton>
+              <Modal.Title>Get Nearest Services</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Discover and find services available to your current area.
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                className="padding_2"
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                className="padding_2"
+                onClick={getUserLocation}
+              >
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
-          <button className="search_btn">
+          <button className="search_btn" onClick={handleSearch}>
             <IoSearch className="search_icon" />
           </button>
         </div>

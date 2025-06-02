@@ -138,21 +138,20 @@
   list-style: none;
   text-transform: uppercase;
   position: fixed;
-  right: -200px;
   display: none;
   transition: 0.4s all;
   margin-top: 10px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   padding: 30px 33px;
 }
 .navbar .show_user_details {
   display: block !important;
-  right: 0 !important;
+  right: 36px;
 }
 .navbar .user_details li {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 15px;

@@ -3,10 +3,14 @@ import { Poppins } from "next/font/google";
 import AosWrapper from "./components/AosWrapper";
 import SiteChrome from "./SiteChrome";
 import "./globals.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 {
   /* The following line can be included in your src/index.js or App.js file */
 }
 import "bootstrap/dist/css/bootstrap.min.css";
+import { UserProvider } from "./userContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +36,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.variable}>
-        <AosWrapper>
-          <SiteChrome position="top" />
-          {children}
-          <SiteChrome position="bottom" />
-        </AosWrapper>
+        <UserProvider>
+          <AosWrapper>
+            <SiteChrome position="top" />
+            {children}
+            <SiteChrome position="bottom" />
+          </AosWrapper>
+        </UserProvider>
       </body>
     </html>
   );
