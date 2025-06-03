@@ -7,87 +7,87 @@ import { useSearchParams } from "next/navigation";
 
 export default function Filter_bar() {
   //categoryId
-  const searchParms = useSearchParams();
-  const selectedCategoryId = searchParms.get("categoryId");
+  // const searchParms = useSearchParams();
+  // const selectedCategoryId = searchParms.get("categoryId");
 
-  const { apiCategory2, setapiCategories2 } = useContext(UserContext);
+  // const { apiCategory2, setapiCategories2 } = useContext(UserContext);
 
-  const [active, setActive] = useState(false);
-  const handleFilterBar = () => {
-    setActive(!active);
-  };
+  // const [active, setActive] = useState(false);
+  // const handleFilterBar = () => {
+  //   setActive(!active);
 
   return (
-    <section className="filter_bar">
-      <p
-        id="filter_heading"
-        className="p-2 filter_small"
-        onClick={handleFilterBar}
-      >
-        <IoFilter />
-        Filters
-      </p>
-      <p id="filter_heading" className="p-2 filter_greater">
-        Filters
-      </p>
-      <div className={`boxes_parent_div ${active ? "active" : ""}`}>
-        <div className="box py-2 px-3">
-          <h3>Gender</h3>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">Male</label>
-          </div>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">Female</label>
-          </div>
-        </div>
-        <div className="box py-2 px-3">
-          <h3>Age</h3>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">20-35 Years</label>
-          </div>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">35-50 Years</label>
-          </div>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">50+ Years</label>
-          </div>
-        </div>
+    <h1>i am compnies</h1>
+    // <section className="filter_bar">
+    //   <p
+    //     id="filter_heading"
+    //     className="p-2 filter_small"
+    //     onClick={handleFilterBar}
+    //   >
+    //     <IoFilter />
+    //     Filters
+    //   </p>
+    //   <p id="filter_heading" className="p-2 filter_greater">
+    //     Filters
+    //   </p>
+    //   <div className={`boxes_parent_div ${active ? "active" : ""}`}>
+    //     <div className="box py-2 px-3">
+    //       <h3>Gender</h3>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">Male</label>
+    //       </div>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">Female</label>
+    //       </div>
+    //     </div>
+    //     <div className="box py-2 px-3">
+    //       <h3>Age</h3>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">20-35 Years</label>
+    //       </div>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">35-50 Years</label>
+    //       </div>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">50+ Years</label>
+    //       </div>
+    //     </div>
 
-        <div className="box py-2 px-3">
-          <h3>Categories</h3>
-          {apiCategory2.map((item, ind) => (
-            <div className="form_div" key={ind}>
-              <input
-                type="checkbox"
-                id={item.id}
-                checked={item.id.toString() === selectedCategoryId}
-              />
-              <label htmlFor={item.id}>{item.name}</label>
-            </div>
-          ))}
-        </div>
-        <div className="box py-2 px-3 city">
-          <h3>City</h3>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">Karachi</label>
-          </div>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">Lahore</label>
-          </div>
-          <div className="form_div">
-            <input type="checkbox" id="gender_check_box" />
-            <label htmlFor="gender_check_box">Islamabad</label>
-          </div>
-        </div>
-      </div>
-    </section>
+    //     <div className="box py-2 px-3">
+    //       <h3>Categories</h3>
+    //       {apiCategory2.map((item, ind) => (
+    //         <div className="form_div" key={ind}>
+    //           <input
+    //             type="checkbox"
+    //             id={item.id}
+    //             checked={item.id.toString() === selectedCategoryId}
+    //           />
+    //           <label htmlFor={item.id}>{item.name}</label>
+    //         </div>
+    //       ))}
+    //     </div>
+    //     <div className="box py-2 px-3 city">
+    //       <h3>City</h3>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">Karachi</label>
+    //       </div>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">Lahore</label>
+    //       </div>
+    //       <div className="form_div">
+    //         <input type="checkbox" id="gender_check_box" />
+    //         <label htmlFor="gender_check_box">Islamabad</label>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </section>
   );
 }
 
