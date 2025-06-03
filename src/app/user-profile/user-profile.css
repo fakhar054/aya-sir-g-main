@@ -13,6 +13,16 @@
 .user_profile .container {
   margin: 0 auto !important;
 }
+.user_profile .name_div {
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.user_profile .name_div .edit_icon {
+  font-size: 24px;
+  cursor: pointer;
+  cursor: pointer;
+}
 .user_profile .profile_img_div {
   height: 355px;
   width: 355px;
@@ -20,6 +30,7 @@
 }
 .user_profile .profile_img_div p#city {
   color: #424242;
+  margin-right: 30px;
 }
 .user_profile .profile_img_div {
   width: 100%;
@@ -29,7 +40,17 @@
   font-size: 25px;
   color: var(--red-color);
   font-weight: bold;
+  margin-bottom: 0;
 }
+
+.user_profile img {
+  width: 150px;
+  border: 1px solid var(--red-color);
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
 .user_profile .profile_img_div p {
   font-size: 17px;
 }

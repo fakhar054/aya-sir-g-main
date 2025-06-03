@@ -11,7 +11,7 @@ export default function page() {
     first_name: "",
     last_name: "",
     username: "",
-    contact_no: "",
+    contact_number: "",
     email: "",
     password: "",
     city: "",
@@ -19,7 +19,6 @@ export default function page() {
   });
 
   const router = useRouter();
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -136,10 +135,10 @@ export default function page() {
               type="text"
               className="input_auth"
               placeholder="Phone Number"
-              name="contact_no"
+              name="contact_number"
               id="contact_no"
               onChange={handleChange}
-              value={formData.contact_no}
+              value={formData.contact_number}
               required
             />
           </div>

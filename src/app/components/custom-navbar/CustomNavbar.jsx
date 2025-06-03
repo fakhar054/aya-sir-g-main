@@ -16,10 +16,10 @@ export default function CustomNavbar() {
   const router = useRouter();
   const [userDetails, showUserDetails] = useState(false);
   const [myNavbar, setMyNavbar] = useState(false);
-  const { userInfo, setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo, loadingUser } = useContext(UserContext);
   const pathname = usePathname();
 
-  // console.log("User Info ", userInfo);
+  if (loadingUser) return null;
 
   const userToken = userInfo?.api_token;
 
@@ -31,6 +31,10 @@ export default function CustomNavbar() {
   };
   const gotoLogin = () => {
     router.push("/login");
+  };
+
+  const gotoProfile = () => {
+    router.push("/user-profile");
   };
 
   const handleLogout = () => {
@@ -143,8 +147,8 @@ export default function CustomNavbar() {
                     userDetails ? "show_user_details" : ""
                   }`}
                 >
-                  <li>Profile</li>
-                  <li>Address</li>
+                  <li onClick={gotoProfile}>Profile</li>
+                  {/* <li>Address</li> */}
                   <li>E-centers</li>
                   <li>Individuals</li>
                   <li>Companies</li>

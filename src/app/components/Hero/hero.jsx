@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./hero.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import { IoSearch } from "react-icons/io5";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { IoLocationOutline } from "react-icons/io5";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { UserContext } from "@/app/userContext";
 
 export default function Hero() {
   const router = useRouter();
@@ -17,12 +18,12 @@ export default function Hero() {
   };
   const handleShow = () => setShow(true);
 
-  const [apiCategory, setapiCategories] = useState([]);
+  const { apiCategory2, setapiCategories2 } = useContext(UserContext);
+  // Removed local apiCategory state
   const [apiServices, setapiServices] = useState([]);
 
   const [selectedServices, setSelectedServices] = useState("Services");
   const [selectedCategory, setSelectedCategory] = useState("Categories");
-  const [selectedCity, setSelectedCity] = useState("All Cities");
 
   const [showServices, setShowServices] = useState(false);
   const [showCities, setShowCities] = useState(false);
@@ -34,7 +35,7 @@ export default function Hero() {
     try {
       const res = await fetch(categoryApi);
       const data = await res.json();
-      setapiCategories(data.data);
+      setapiCategories2(data.data);
     } catch (error) {
       console.log("Error while fetching categories");
     }
@@ -55,7 +56,7 @@ export default function Hero() {
     }
   };
 
-  //code for location
+  // code for location
   const [location, setLocation] = useState({ lat: null, lon: null });
   const [error, setError] = useState("");
 
@@ -81,7 +82,7 @@ export default function Hero() {
   };
 
   const handleSelectedCategory = async (eventKey, event) => {
-    const selectedCat = apiCategory.find(
+    const selectedCat = apiCategory2.find(
       (cat) => `${cat.name} ${cat.id}` === eventKey
     );
     setSelectedCategory(selectedCat?.name || "Categories");
@@ -100,7 +101,11 @@ export default function Hero() {
   };
 
   const handleSearch = () => {
-    router.push("/compnies");
+    const selectedCat = apiCategory2.find(
+      (cat) => cat.name === selectedCategory
+    );
+    const categoryId = selectedCat?.id || "";
+    router.push(`/compnies?categoryId=${categoryId}`);
   };
 
   useEffect(() => {
@@ -138,7 +143,7 @@ export default function Hero() {
               {selectedCategory}
             </Dropdown.Toggle>
             <Dropdown.Menu className="list_menu">
-              {apiCategory.map((item) => (
+              {apiCategory2.map((item) => (
                 <Dropdown.Item
                   key={item.id}
                   eventKey={`${item.name} ${item.id}`}
