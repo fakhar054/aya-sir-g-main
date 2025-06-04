@@ -12,7 +12,9 @@ export default function Page() {
 
   const token = userInfo?.api_token;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "https://staging.hylanmaterialsupply.com";
   const api = `${baseUrl}/api/update-profile`;
 
   const fetchData = async () => {
