@@ -6,8 +6,9 @@ import { UserContext } from "@/app/userContext";
 import { useSearchParams } from "next/navigation";
 
 export default function Filter_bar() {
-  // const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   // const selectedCategoryIdFromURL = searchParams.get("categoryId");
+  // console.log("searchParms", selectedCategoryIdFromURL);
 
   const { apiCategory2, setapiCategories2 } = useContext(UserContext);
   const [active, setActive] = useState(false);
