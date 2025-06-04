@@ -25,7 +25,9 @@ export default function page() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "https://staging.hylanmaterialsupply.com";
 
   const api = `${baseUrl}/api/register`;
   const postData = async () => {

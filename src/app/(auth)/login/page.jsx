@@ -16,7 +16,9 @@ export default function page() {
     password: "",
   });
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "https://staging.hylanmaterialsupply.com";
   const login = async () => {
     try {
       const loginUrl = `${baseUrl}/api/login`;
