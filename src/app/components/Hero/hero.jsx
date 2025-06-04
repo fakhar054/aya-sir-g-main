@@ -28,7 +28,9 @@ export default function Hero() {
   const [showServices, setShowServices] = useState(false);
   const [showCities, setShowCities] = useState(false);
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "https://staging.hylanmaterialsupply.com";
   const categoryApi = `${baseUrl}/api/category-list`;
 
   const getCategories = async () => {
