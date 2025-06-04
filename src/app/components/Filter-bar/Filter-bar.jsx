@@ -221,7 +221,7 @@ export default function Filter_bar() {
   // const searchParams = useSearchParams();
   // const selectedCategoryIdFromURL = searchParams.get("categoryId");
 
-  // const { apiCategory2, setapiCategories2 } = useContext(UserContext);
+  const { apiCategory2, setapiCategories2 } = useContext(UserContext);
   const [active, setActive] = useState(false);
   // const [selectedCategoryId, setSelectedCategoryId] = useState(
   //   selectedCategoryIdFromURL || ""
@@ -294,17 +294,17 @@ export default function Filter_bar() {
 
         <div className="box py-2 px-3">
           <h3>Categories</h3>
-          {/* {apiCategory2.map((item) => (
+          {apiCategory2.map((item) => (
             <div className="form_div" key={item.id}>
               <input
                 type="checkbox"
                 id={`category_${item.id}`}
-                checked={selectedCategoryId === item.id.toString()}
-                onChange={() => handleCategoryChange(item.id.toString())}
+                // checked={selectedCategoryId === item.id.toString()}
+                // onChange={() => handleCategoryChange(item.id.toString())}
               />
               <label htmlFor={`category_${item.id}`}>{item.name}</label>
             </div>
-          ))} */}
+          ))}
         </div>
 
         <div className="box py-2 px-3 city">
