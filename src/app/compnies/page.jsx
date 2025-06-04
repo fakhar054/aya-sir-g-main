@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import "./individuals.css";
 import Filterbar from "../components/Filter-bar/Filter-bar";
