@@ -288,7 +288,7 @@ export default function Page() {
                       </div>
 
                       <div className="input_one_row">
-                        <div>
+                        {/* <div>
                           <label htmlFor="image">Image</label>
                           <input
                             type="file"
@@ -299,7 +299,7 @@ export default function Page() {
                             onChange={handleChange}
                             // value={formData.contact_number}
                           />
-                        </div>
+                        </div> */}
 
                         <div>
                           <label htmlFor="experience">Audio</label>
