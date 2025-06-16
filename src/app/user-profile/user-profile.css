@@ -88,6 +88,33 @@
   width: 80%;
 }
 
+.modal-body form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.modal-body .input_one_row {
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  display: flex;
+  width: 100%;
+}
+.modal-body .input_auth {
+  margin-bottom: 11px;
+  box-shadow: 4px 4px 10px #00000040;
+  border: 1px solid var(--lighter-gray);
+  text-align: center;
+  background-color: #fff;
+  border-radius: 9px;
+  outline: none;
+  width: 100%;
+  max-width: 472px;
+  height: 44px;
+}
+
 @media screen and (max-width: 768px) {
   .user_profile .flex_div p {
     font-size: 17px;

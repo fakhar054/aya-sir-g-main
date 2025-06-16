@@ -21,12 +21,6 @@ export const UserProvider = ({ children }) => {
     getCategories();
   }, []);
 
-  // useEffect(() => {
-  //   if (apiCategory2.length > 0) {
-  //     // console.log("Fetching categroies in context", apiCategory2);
-  //   }
-  // }, [apiCategory2]);
-
   const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
@@ -49,6 +43,39 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  //code for user profile
+  const [userDetails, setUserDetails] = useState(null);
+  const token = userInfo?.api_token;
+  // console.log("token is ", token);
+  const base = process.env.NEXT_PUBLIC_BASE_URL;
+  const url_profile = `${base}/api/update-profile`;
+  const profileUrl =
+    url_profile || "https://staging.hylanmaterialsupply.com/api/update-profile";
+  // const apiUrl = `${baseUrl}/api/update-profile`;
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch(profileUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({}),
+      });
+
+      const data = await res.json();
+      setUserDetails(data.data);
+    } catch (error) {
+      console.error("Error posting token:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [userInfo]);
+  // useEffect(() => {}, [userDetails]);
+
   return (
     <UserContext.Provider
       value={{
@@ -57,6 +84,8 @@ export const UserProvider = ({ children }) => {
         apiCategory2,
         setapiCategories2,
         loadingUser,
+        userDetails,
+        setUserDetails,
       }}
     >
       {children}
