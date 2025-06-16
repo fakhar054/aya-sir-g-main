@@ -11,7 +11,7 @@ export default function RegisterPage() {
     first_name: "",
     last_name: "",
     username: "",
-    contact_no: "",
+    contact_number: "",
     email: "",
     password: "",
     user_type: "",
@@ -128,9 +128,9 @@ export default function RegisterPage() {
               type="text"
               className="input_auth"
               placeholder="Phone Number"
-              name="contact_no"
+              name="contact_number"
               onChange={handleChange}
-              value={formData.contact_no}
+              value={formData.contact_number}
               required
             />
           </div>

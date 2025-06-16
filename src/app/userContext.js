@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
   const [apiCategory2, setapiCategories2] = useState([]);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const categoryApi = `${baseUrl}/api/category-list`;
+
   const getCategories = async () => {
     try {
       const res = await fetch(categoryApi);
@@ -20,21 +21,17 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     getCategories();
   }, []);
-
   const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     const token = localStorage.getItem("token");
     if (!token) {
       setLoadingUser(false);
       return;
     }
-
     try {
       const parsed = JSON.parse(token);
-
       setUserInfo(parsed);
     } catch (err) {
       console.error("Failed to parse token:", err);
@@ -47,7 +44,9 @@ export const UserProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const token = userInfo?.api_token;
   // console.log("token is ", token);
-  const base = process.env.NEXT_PUBLIC_BASE_URL;
+  const base =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "https://staging.hylanmaterialsupply.com";
   const url_profile = `${base}/api/update-profile`;
   const profileUrl =
     url_profile || "https://staging.hylanmaterialsupply.com/api/update-profile";
@@ -63,7 +62,6 @@ export const UserProvider = ({ children }) => {
         },
         body: JSON.stringify({}),
       });
-
       const data = await res.json();
       setUserDetails(data.data);
     } catch (error) {
@@ -74,7 +72,6 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     fetchData();
   }, [userInfo]);
-  // useEffect(() => {}, [userDetails]);
 
   return (
     <UserContext.Provider

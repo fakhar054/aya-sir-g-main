@@ -102,6 +102,9 @@
   display: flex;
   width: 100%;
 }
+.input_one_row div {
+  width: 50%;
+}
 .modal-body .input_auth {
   margin-bottom: 11px;
   box-shadow: 4px 4px 10px #00000040;
@@ -113,6 +116,27 @@
   width: 100%;
   max-width: 472px;
   height: 44px;
+}
+
+.modal-footer {
+  width: 100%;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+input#image,
+input#audio {
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.model_body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.model_body img {
+  width: 120px;
 }
 
 @media screen and (max-width: 768px) {
