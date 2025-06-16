@@ -18,7 +18,9 @@ export default function RegisterPage() {
     designation: "",
   });
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    "https://staging.hylanmaterialsupply.com";
   const api = `${baseUrl}/api/register`;
 
   const handleRegisterion = async () => {
@@ -39,15 +41,17 @@ export default function RegisterPage() {
     router.push("/");
   };
 
+  //handyman
+  //provider
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     const mappedValue =
       name === "user_type"
         ? value === "individual"
-          ? "provider"
-          : value === "company"
           ? "handyman"
+          : value === "company"
+          ? "provider"
           : ""
         : value;
 
@@ -132,7 +136,7 @@ export default function RegisterPage() {
           </div>
 
           <div className="input_one_row">
-            <select
+            {/* <select
               className="input_auth"
               name="user_type"
               onChange={handleChange}
@@ -140,6 +144,23 @@ export default function RegisterPage() {
                 formData.user_type === "provider"
                   ? "individual"
                   : formData.user_type === "handyman"
+                  ? "company"
+                  : ""
+              }
+              required
+            >
+              <option value="">Select User Type</option>
+              <option value="individual">Individual</option>
+              <option value="company">Company</option>
+            </select> */}
+            <select
+              className="input_auth"
+              name="user_type"
+              onChange={handleChange}
+              value={
+                formData.user_type === "handyman"
+                  ? "individual"
+                  : formData.user_type === "provider"
                   ? "company"
                   : ""
               }
