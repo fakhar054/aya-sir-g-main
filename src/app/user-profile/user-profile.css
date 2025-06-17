@@ -138,7 +138,38 @@ input#audio {
 .model_body img {
   width: 120px;
 }
-
+form .image_div {
+  position: relative;
+}
+form .image_div .edit_icon {
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.audio_icon {
+  font-size: 30px;
+  cursor: pointer;
+}
+.audio_class {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.input_row_full {
+  width: 100%;
+}
+.listen_audio {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.user_profile select {
+  width: 100%;
+}
 @media screen and (max-width: 768px) {
   .user_profile .flex_div p {
     font-size: 17px;
