@@ -1,4 +1,3 @@
-
 import BlogCard from "../components/Blog-Card/BlogCard";
 import "./blogs.css";
 
@@ -20,7 +19,7 @@ export default async function Page() {
   try {
     const result = await getData();
     data = await result.data;
-    console.log("result:", data);
+    // console.log("result:", data);
   } catch (error) {
     console.error("Error while fetching blogs:", error);
   }

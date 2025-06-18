@@ -14,7 +14,7 @@ export default function BlogCard({ content }) {
     const words = str.split(" ");
     return words.slice(0, 20).join(" ") + (words.length > 20 ? "..." : "");
   };
-  console.log("content is ", content);
+  // console.log("content is ", content);
 
   return (
     <section className="blog_card">
