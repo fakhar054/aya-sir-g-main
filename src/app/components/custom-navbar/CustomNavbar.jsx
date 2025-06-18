@@ -11,8 +11,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { UserContext } from "@/app/userContext";
+import Myform from "../Myform/Myform";
 
 export default function CustomNavbar() {
+  const [selectedType, setSelectedType] = useState(null);
+
   const router = useRouter();
   const [userDetails, showUserDetails] = useState(false);
   const [myNavbar, setMyNavbar] = useState(false);
@@ -42,6 +45,10 @@ export default function CustomNavbar() {
     localStorage.removeItem("token");
     showUserDetails(false);
     router.push("/login");
+  };
+
+  const handleClick = (type) => {
+    setSelectedType(type);
   };
 
   return (
@@ -149,15 +156,18 @@ export default function CustomNavbar() {
                 >
                   <li onClick={gotoProfile}>Profile</li>
                   {/* <li>Address</li> */}
-                  <li>E-centers</li>
-                  <li>Individuals</li>
-                  <li>Companies</li>
+                  <li onClick={() => handleClick("e-centers")}>E-centers</li>
+                  <li onClick={() => handleClick("individual")}>Individuals</li>
+                  <li onClick={() => handleClick("companies")}>Companies</li>
                   <li onClick={handleLogout}>Logout</li>
                 </ul>
               )}
             </div>
           </div>
         </nav>
+        <div className="display_form">
+          {selectedType && <Myform openedFrom={selectedType} />}
+        </div>
       </div>
     </section>
   );

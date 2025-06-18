@@ -1,0 +1,17 @@
+.blog_details {
+  font-family: var(--font-poppins), sans-serif;
+  width: 100%;
+}
+
+h2.heading {
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 700;
+}
+.img_div img {
+  width: 100%;
+  height: 60vh;
+  object-fit: center;
+}
+p.description {
+  font-size: 16px;
+}

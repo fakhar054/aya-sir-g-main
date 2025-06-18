@@ -1,7 +1,6 @@
 "use client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./user-profile.css";
-import AddressForm from "../components/Address-form/AddressForm";
 import { FaEdit } from "react-icons/fa";
 import { UserContext } from "../userContext";
 import Modal from "react-bootstrap/Modal";
@@ -66,53 +65,14 @@ export default function Page() {
     fileInputRef.current.click();
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setSelectedFile(file);
-  //     setImagePreview(URL.createObjectURL(file));
-  //   }
-  // };
-
   const [showForm, setShowForm] = useState(false);
   const { userInfo, userDetails, setUserDetails } = useContext(UserContext);
 
-  // console.log("User Detials are,,", userDetails);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const token = userInfo?.api_token;
-  // const baseUrl =
-  //   process.env.NEXT_PUBLIC_BASE_URL ||
-  //   "https://staging.hylanmaterialsupply.com";
-  // const api = `${baseUrl}/api/update-profile`;
-
-  // const fetchData = async () => {
-  //   try {
-  //     const res = await fetch(api, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({}),
-  //     });
-
-  //     const data = await res.json();
-  //     setUserDetails(data.data);
-  //   } catch (error) {
-  //     console.error("Error posting token:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-  // useEffect(() => {}, [userDetails]);
-
-  // ✨ Always call hooks at the top level, unconditionally
   useEffect(() => {
     if (userDetails) {
       setFormData({
@@ -347,9 +307,10 @@ export default function Page() {
                         <div>
                           <label htmlFor="cnic">CNIC Scan Copy</label>
                           <input
-                            className="input_auth"
+                            className="input_auth pad"
                             type="file"
                             name="cnicFront"
+                            accept="image/*"
                             onChange={handleImageChange}
                           />
                         </div>
@@ -357,7 +318,7 @@ export default function Page() {
                         <div>
                           <label htmlFor="address">Picture</label>
                           <input
-                            className="input_auth"
+                            className="input_auth pad"
                             id="cameraInput"
                             type="file"
                             accept="image/*"
@@ -375,8 +336,8 @@ export default function Page() {
                           <input
                             type="text"
                             className="input_auth"
-                            placeholder="Disability"
-                            name="disability"
+                            placeholder="Interested Locations"
+                            name="locations"
                             id="disability"
                             onChange={handleChange}
                             // value={formData.contact_number}
@@ -388,13 +349,11 @@ export default function Page() {
                             Last Billing Addresss scan copy
                           </label>
                           <input
-                            type="number"
-                            className="input_auth"
-                            placeholder="Experience"
-                            name="experience"
-                            id="experience"
-                            onChange={handleChange}
-                            // value={formData.address}
+                            className="input_auth pad"
+                            type="file"
+                            name="cnicFront"
+                            accept="image/*"
+                            onChange={handleImageChange}
                           />
                         </div>
                       </div>
@@ -405,7 +364,7 @@ export default function Page() {
                           <input
                             type="text"
                             className="input_auth"
-                            placeholder="Disability"
+                            placeholder="Fields"
                             name="disability"
                             id="disability"
                             onChange={handleChange}

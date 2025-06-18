@@ -1,5 +1,7 @@
+"use client";
 import React from "react";
 import "./blog_card.css";
+import Link from "next/link";
 
 export default function BlogCard({ content }) {
   const getWords = (str) => {
@@ -12,6 +14,7 @@ export default function BlogCard({ content }) {
     const words = str.split(" ");
     return words.slice(0, 20).join(" ") + (words.length > 20 ? "..." : "");
   };
+  console.log("content is ", content);
 
   return (
     <section className="blog_card">
@@ -22,7 +25,7 @@ export default function BlogCard({ content }) {
       <div className="body">
         <h3>{getWords(content.title)}</h3>
         <p className="mb-3">{getWordsTitle(content.description)}</p>
-        <a href="#">Continue reading</a>
+        <Link href={`/blogdetails/${content.id}`}>Continue reading</Link>
       </div>
     </section>
   );

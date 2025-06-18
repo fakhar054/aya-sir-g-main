@@ -1,4 +1,3 @@
-//           <BlogCard />
 
 import BlogCard from "../components/Blog-Card/BlogCard";
 import "./blogs.css";
@@ -17,10 +16,6 @@ const getData = async function fetchBlogs() {
 };
 
 export default async function Page() {
-
-  
-
-
   let data = [];
   try {
     const result = await getData();
